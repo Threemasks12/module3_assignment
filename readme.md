@@ -1,7 +1,7 @@
 # 
 
 The spirit of this assignment is to do everything as well as you can from scratch. 
-I.e. if there is functionality-built inn, that will solve the problem quickly, then that is not what we want you to do. Use your skill and knowledge and the concepts we have been covering to solve these tasks (Under know circumstances use Linq or similar solutions).
+I.e. if there is functionality-built in, that will solve the problem quickly, then that is not what we want you to do. Use your skill and knowledge and the concepts we have been covering to solve these tasks (Under no circumstances use Linq or similar solutions).
 
 Your judgment is an important part of your submission, so it is up to you to decide when your submission is good enough. 
 
@@ -20,7 +20,7 @@ Create the following functions:
 - A function that returns the area of a circle given the radius. 
 - A function that returns a greeting, given a name.
 
-## Task : Flatten thos numbers
+## Task : Flatten those numbers
 
 In the file `arrays.json` there is an example of a an array that contains integers and possibly other arrays. If you need more test data you can get as many as you want from [this source](https://crismo-turquoisejaguar.web.val.run/arrayI) The task is to write a function that returns a flattened version of any such array structure.
 
@@ -78,13 +78,13 @@ Nodes = 5
 ## Task: My books they are a mess. 
 
 In the file `books.json` there is a listing of books. Write the functions to
-- Return only boks starting with `The`
-- Return only books writen by authors with a `t` in their name
-- The number of books writen after `1992`
-- The number of books writen befor `2004`
-- Return the isbn number of all the boos for a given author.
-- List books alphabeticaly assending or decendig 
-- List books chronologicaly assending or decendig 
+- Return only books starting with `The`
+- Return only books written by authors with a `t` in their name
+- The number of books written after `1992`
+- The number of books written before `2004`
+- Return the isbn number of all the books for a given author.
+- List books alphabetically assending or decendig 
+- List books chronologically assending or decendig 
 - List books grouped by author last name
 - Lits books grouped by author first name
 
