@@ -1,8 +1,8 @@
 
-/* 
+/* Task 1
 ## Task : Functions are a popping
 Create the following functions: 
-*/
+
 
 
 //A function that returns the square of a number
@@ -110,3 +110,4 @@ static void Print(string msg)
 
     Console.WriteLine(msg);
 }
+*/
