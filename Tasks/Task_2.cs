@@ -79,3 +79,5 @@ static void flattendArrayHelperFunction(int[][] array, List<int> result)
     }
   }
 }
+
+Console.WriteLine("placehodler");
