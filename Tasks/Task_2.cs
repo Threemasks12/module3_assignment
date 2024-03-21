@@ -33,16 +33,49 @@ Example:
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Collections.Generic;
 
 string jsonFileArrayOfIntegiers = File.ReadAllText("arrays.Json");
 
-int[][] jaggetArray = JsonConvert.DeserializeObject<int[][]>(jsonFileArrayOfIntegiers);
-foreach (int[] innerarray in jaggetArray)
-{
-  foreach(int number in innerarray)
-  {
-    Console.WriteLine(number + ", ");
-  }
-  Console.WriteLine();
+int[][] jaggetArray = JsonSerializer.Deserialize<int[][]>(jsonFileArrayOfIntegiers);
 
+int[] flattendArray = FlattenJaggedArray(jaggetArray);
+
+try 
+{
+  foreach (int num in flattendArray)
+  {
+  Console.Write(num + " , ");
+  }
+}
+catch
+{
+  Console.WriteLine("ddint work");
+};
+
+static int[] FlattenJaggedArray(int[][] jaggedArray)
+{
+  List<int> flattendList= new List<int>();
+  flattendArrayHelperFunction(jaggedArray, flattendList);
+  return flattendList.ToArray();
+}
+
+static void flattendArrayHelperFunction(int[][] array, List<int> result)
+{
+  foreach(var item in array)
+  {
+    if(item == null)
+      continue;
+    
+    foreach(var innerItem in item)
+    {
+      if(innerItem is int[])
+      
+        result.Add((int)innerItem);
+      
+      else if(innerItem is int[])
+        flattendArrayHelperFunction((int[][])innerItem, result);
+      
+    }
+  }
 }
