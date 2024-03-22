@@ -1,6 +1,8 @@
 /* Task : Left and right up and down, away we go. 
 
-In the file `nodes.json`there is an example of a data structure that has a value of type integer, but also a left and right variable that could be a object of the same type. If you need more test data you can get as much as you want from [this source](https://crismo-turquoisejaguar.web.val.run/treeI)
+In the file `nodes.json`there is an example of a data structure that has a value of type integer, 
+but also a left and right variable that could be a object of the same type. If you need more test data you can get as much as you want from 
+[this source](https://crismo-turquoisejaguar.web.val.run/treeI)
 
 - Calculate the sum of the full structure.
 - Report the deepest level of the structure. 
@@ -26,3 +28,93 @@ Sum = 1942
 Deepest level = 4
 Nodes = 5
 */
+
+
+
+using System.Text.Json;
+
+try 
+{
+    string filePath = "example_files/nodes.json";
+    
+    if(File.Exists(filePath))
+    {
+       string json = File.ReadAllText(filePath);
+
+       dynamic nodesData = JsonSerializer.Deserialize<dynamic>(json);
+
+       int sum = CalculateSum(nodesData);
+        Print("Sum of the structrure: " + sum);
+        
+        int maxDepth = findTheDeaperstLevel(nodesData);
+        Print("The deepest level of the structure: " + maxDepth);
+
+        int nodeCount = CountNodes(nodesData);
+        Print("Number of nodes");
+    }
+    else
+    {
+        Print("file note found: " + filePath);
+    }
+}
+catch 
+{
+    Print("Cant run program");
+}
+
+
+static int CalculateSum(dynamic node)
+{
+    int sum = 0; 
+    
+    if (node != null)
+    {
+        sum += node ["value"];
+
+        if(node.ContainsKey("left"))
+        {
+            sum += CalculateSum(node["left"]);
+        }
+
+        if(node.ContainsKey(node["right"]))
+        {
+            sum += CalculateSum(node["right"]);
+        }
+
+    }
+    
+    return sum;
+}
+
+static int findTheDeaperstLevel (dynamic node)
+{
+    if(node == null)
+    {
+        return 0;
+    }
+    int leftDepth = findTheDeaperstLevel(node["left"]);
+    int rightDepth = findTheDeaperstLevel(node["right"]);
+
+    return Math.Max(leftDepth, rightDepth) + 1;
+}
+
+static int CountNodes(dynamic node)
+{
+    if(node == null)
+    {
+        return 0;
+    }
+
+    int leftCount = CountNodes(node["left"]);
+    int rightCount = CountNodes(node["right"]);
+
+    return leftCount + rightCount + 1;
+}
+
+//helper function
+
+static void Print(string msg)
+{
+
+    Console.WriteLine(msg);
+}

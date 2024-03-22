@@ -31,7 +31,7 @@ Example:
 ```
 */
 
-
+/*
 using System.Text.Json;
 
 try
@@ -80,3 +80,4 @@ static List<int> FlattenArray(dynamic array)
 
     return result;
 }
+*/
