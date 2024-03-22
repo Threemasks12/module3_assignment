@@ -32,20 +32,20 @@ Nodes = 5
 
 
 using System.Text.Json;
-
-try 
+/*
+try
 {
     string filePath = "example_files/nodes.json";
-    
-    if(File.Exists(filePath))
+
+    if (File.Exists(filePath))
     {
-       string json = File.ReadAllText(filePath);
+        string json = File.ReadAllText(filePath);
 
-       dynamic nodesData = JsonSerializer.Deserialize<dynamic>(json);
+        dynamic nodesData = JsonSerializer.Deserialize<dynamic>(json);
 
-       int sum = CalculateSum(nodesData);
+        int sum = CalculateSum(nodesData);
         Print("Sum of the structrure: " + sum);
-        
+
         int maxDepth = findTheDeaperstLevel(nodesData);
         Print("The deepest level of the structure: " + maxDepth);
 
@@ -57,38 +57,38 @@ try
         Print("file note found: " + filePath);
     }
 }
-catch 
+catch (Exception ex)
 {
     Print("Cant run program");
 }
 
 
 static int CalculateSum(dynamic node)
-{
-    int sum = 0; 
-    
-    if (node != null)
     {
-        sum += node ["value"];
+        int sum = 0;
 
-        if(node.ContainsKey("left"))
+        if (node != null)
         {
-            sum += CalculateSum(node["left"]);
+            sum += node["value"];
+
+            if (node.ContainsKey("left"))
+            {
+                sum += CalculateSum(node["left"]);
+            }
+
+            if (node.ContainsKey("right"))
+            {
+                sum += CalculateSum(node["right"]);
+            }
+
         }
 
-        if(node.ContainsKey(node["right"]))
-        {
-            sum += CalculateSum(node["right"]);
-        }
-
+        return sum;
     }
-    
-    return sum;
-}
 
-static int findTheDeaperstLevel (dynamic node)
+static int findTheDeaperstLevel(dynamic node)
 {
-    if(node == null)
+    if (node == null)
     {
         return 0;
     }
@@ -99,22 +99,109 @@ static int findTheDeaperstLevel (dynamic node)
 }
 
 static int CountNodes(dynamic node)
-{
-    if(node == null)
     {
-        return 0;
+        if (node == null)
+        {
+            return 0;
+        }
+
+        int leftCount = CountNodes(node["left"]);
+        int rightCount = CountNodes(node["right"]);
+
+        return leftCount + rightCount + 1;
     }
 
-    int leftCount = CountNodes(node["left"]);
-    int rightCount = CountNodes(node["right"]);
+    */
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            string filePath = "example_files/nodes.json";
 
-    return leftCount + rightCount + 1;
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+
+                JsonDocument document = JsonDocument.Parse(json);
+
+                JsonElement rootNode = document.RootElement;
+
+                int sum = CalculateSum(rootNode);
+                Print("Sum of the structure: " + sum);
+
+                int maxDepth = FindTheDeepestLevel(rootNode);
+                Print("The deepest level of the structure: " + maxDepth);
+
+                int nodeCount = CountNodes(rootNode);
+                Print("Number of nodes: " + nodeCount);
+            }
+            else
+            {
+                Print("File not found: " + filePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            Print("Error: " + ex.Message);
+        }
+    }
+
+    static int CalculateSum(JsonElement node)
+    {
+        int sum = 0;
+
+        if (node.ValueKind != JsonValueKind.Null)
+        {
+            sum += node.GetProperty("value").GetInt32();
+
+            if (node.TryGetProperty("left", out JsonElement left))
+            {
+                sum += CalculateSum(left);
+            }
+
+            if (node.TryGetProperty("right", out JsonElement right))
+            {
+                sum += CalculateSum(right);
+            }
+        }
+
+        return sum;
+    }
+
+    static int FindTheDeepestLevel(JsonElement node)
+    {
+        if (node.ValueKind == JsonValueKind.Null)
+        {
+            return 0;
+        }
+
+        int leftDepth = FindTheDeepestLevel(node.GetProperty("left"));
+        int rightDepth = FindTheDeepestLevel(node.GetProperty("right"));
+
+        return Math.Max(leftDepth, rightDepth) + 1;
+    }
+
+    static int CountNodes(JsonElement node)
+    {
+        if (node.ValueKind == JsonValueKind.Null)
+        {
+            return 0;
+        }
+
+        int leftCount = CountNodes(node.GetProperty("left"));
+        int rightCount = CountNodes(node.GetProperty("right"));
+
+        return leftCount + rightCount + 1;
+    }
+
+    // Helper function to print messages
+    static void Print(string msg)
+    {
+        Console.WriteLine(msg);
+    }
+    
 }
-
 //helper function
 
-static void Print(string msg)
-{
-
-    Console.WriteLine(msg);
-}
