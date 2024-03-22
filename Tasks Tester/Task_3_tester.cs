@@ -30,88 +30,8 @@ Nodes = 5
 */
 
 
-
-using System.Text.Json;
 /*
-try
-{
-    string filePath = "example_files/nodes.json";
-
-    if (File.Exists(filePath))
-    {
-        string json = File.ReadAllText(filePath);
-
-        dynamic nodesData = JsonSerializer.Deserialize<dynamic>(json);
-
-        int sum = CalculateSum(nodesData);
-        Print("Sum of the structrure: " + sum);
-
-        int maxDepth = findTheDeaperstLevel(nodesData);
-        Print("The deepest level of the structure: " + maxDepth);
-
-        int nodeCount = CountNodes(nodesData);
-        Print("Number of nodes");
-    }
-    else
-    {
-        Print("file note found: " + filePath);
-    }
-}
-catch (Exception ex)
-{
-    Print("Cant run program");
-}
-
-
-static int CalculateSum(dynamic node)
-    {
-        int sum = 0;
-
-        if (node != null)
-        {
-            sum += node["value"];
-
-            if (node.ContainsKey("left"))
-            {
-                sum += CalculateSum(node["left"]);
-            }
-
-            if (node.ContainsKey("right"))
-            {
-                sum += CalculateSum(node["right"]);
-            }
-
-        }
-
-        return sum;
-    }
-
-static int findTheDeaperstLevel(dynamic node)
-{
-    if (node == null)
-    {
-        return 0;
-    }
-    int leftDepth = findTheDeaperstLevel(node["left"]);
-    int rightDepth = findTheDeaperstLevel(node["right"]);
-
-    return Math.Max(leftDepth, rightDepth) + 1;
-}
-
-static int CountNodes(dynamic node)
-    {
-        if (node == null)
-        {
-            return 0;
-        }
-
-        int leftCount = CountNodes(node["left"]);
-        int rightCount = CountNodes(node["right"]);
-
-        return leftCount + rightCount + 1;
-    }
-
-    */
+using System.Text.Json;
 class Program
 {
     static void Main()
@@ -203,5 +123,5 @@ class Program
     }
     
 }
-//helper function
+*/
 
