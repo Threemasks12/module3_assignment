@@ -32,7 +32,7 @@ static double Converter(double inches)
     return inches * convertNumbner;
 };
 
-Print($"{inches} is equal to {mm} millimeters");
+Print($"{inches} inches is equal to {mm} millimeters");
 
 Print("-------------------------------------------------------------------------------------------");
 
