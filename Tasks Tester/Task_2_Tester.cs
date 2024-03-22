@@ -33,53 +33,49 @@ Example:
 
 
 using System.Text.Json;
-
-class Program
+try
 {
-    static void Main()
+    string filePath = "example_files/arrays.json";
+
+    if (File.Exists(filePath))
     {
-        try
-        {
-            string filePath = " arrays.json ";
+        string json = File.ReadAllText(filePath);
 
-            if (File.Exists(filePath))
-            {
-                string json = File.ReadAllText(filePath);
+        dynamic arrayData = JsonSerializer.Deserialize<dynamic>(json);
 
-                dynamic arrayData = JsonSerializer.Deserialize<dynamic>(json);
+        List<int> flattenedArray = FlattenArray(arrayData);
 
-                List<int> flattenedArray = FlattenArray(arrayData);
-
-                foreach (var item in flattenedArray)
-                {
-                    Console.WriteLine(item);
-                }
-            }
-            else
-            {
-                Console.WriteLine("File not found: " + filePath);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error: " + ex.Message);
-        }
+        Console.WriteLine("[" + string.Join(", ", flattenedArray) + "]");
     }
-
-    static List<int> FlattenArray(dynamic array)
+    else
     {
-        List<int> result = new List<int>();
-        foreach (var item in array)
+        Console.WriteLine("File not found: " + filePath);
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Error: " + ex.Message);
+}
+
+
+static List<int> FlattenArray(dynamic array)
+{
+    List<int> result = new List<int>();
+
+    if (array.ValueKind == JsonValueKind.Array)
+    {
+        foreach (var item in array.EnumerateArray())
         {
-            if (item is int)
+            if (item.ValueKind == JsonValueKind.Number)
             {
-                result.Add(item);
+                result.Add(item.GetInt32());
             }
-            else if (item is List<object>)
+            else if (item.ValueKind == JsonValueKind.Array)
             {
                 result.AddRange(FlattenArray(item));
             }
         }
-        return result;
     }
+
+    return result;
 }
